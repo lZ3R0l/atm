@@ -1,12 +1,46 @@
 const account = {
     accountName: 'John Doe',
     balance: 1000,
+    
+    deposit() {
+        let depositAmount = parseFloat(prompt("Enter the amount to deposit:"));
+        if (isNaN(depositAmount) || depositAmount <= 0) {
+            accountError("Invalid amount. Please enter a positive number.");
+        } else {
+            account.balance += depositAmount;
+            alert(`$${depositAmount} has been deposited to your account.`);
+        }
+    },
+    
+    withdraw() {
+        let withdrawAmount = parseFloat(prompt("Enter the amount to withdraw:"));
+        if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
+            accountError("Invalid amount. Please enter a positive number.");
+        } else if (withdrawAmount > account.balance) {
+            accountError("Insufficient funds. Please enter a smaller amount.");
+        } else {
+            account.balance -= withdrawAmount;
+            alert(`$${withdrawAmount} has been withdrawn from your account.`);
+        }
+    },
+    
+    getBalance() {
+        alert(`Your account balance is $${account.balance}`);
+    
+    },
+    
+    getAccountName() {
+        alert(`The account belongs to ${account.accountName}`);
+    },
+    
+    accountError(message) {
+        console.error(`Account Error: ${message}`);
+        alert(`Error: ${message}`);
+    },
 }
 
 function atm() {
     let choice
-
-    
 
     do {
         choice = parseFloat(
@@ -22,60 +56,24 @@ function atm() {
 
         switch (choice) {
             case 1:
-                deposit();
+                account.deposit();
                 break;
             case 2:
-                withdraw();
+                account.withdraw();
                 break;
             case 3:
-                getBalance();
+                account.getBalance();
                 break;
             case 4:
-                getAccountName();
+                account.getAccountName();
                 break;
             case 5:
                 alert("Thank you for using our ATM. Goodbye!");
                 break;
             default:
-                accountError("Invalid choice. Please try again.");
+                account.accountError("Invalid choice. Please try again.");
         }
     } while (choice !== 5);
-}
-
-function deposit() {
-    let depositAmount = parseFloat(prompt("Enter the amount to deposit:"));
-    if (isNaN(depositAmount) || depositAmount <= 0) {
-        accountError("Invalid amount. Please enter a positive number.");
-    } else {
-        account.balance += depositAmount;
-        alert(`$${depositAmount} has been deposited to your account.`);
-    }
-}
-
-function withdraw() {
-    let withdrawAmount = parseFloat(prompt("Enter the amount to withdraw:"));
-    if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
-        accountError("Invalid amount. Please enter a positive number.");
-    } else if (withdrawAmount > account.balance) {
-        accountError("Insufficient funds. Please enter a smaller amount.");
-    } else {
-        account.balance -= withdrawAmount;
-        alert(`$${withdrawAmount} has been withdrawn from your account.`);
-    }
-}
-
-function getBalance() {
-    alert(`Your account balance is $${account.balance}`);
-
-}
-
-function getAccountName() {
-    alert(`The account belongs to ${account.accountName}`);
-}
-
-function accountError(message) {
-    console.error(`Account Error: ${message}`);
-    alert(`Error: ${message}`);
 }
 
 atm();
